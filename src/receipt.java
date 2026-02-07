@@ -518,7 +518,7 @@ public class receipt extends javax.swing.JFrame {
         jLabel64.setText("jLabel64");
 
         jLabel68.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel68.setText("Total Amount:");
+        jLabel68.setText("Total Unit:");
 
         jLabel69.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel69.setText("0.00");
@@ -597,8 +597,8 @@ public class receipt extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel52)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel68, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel68)
+                                .addGap(26, 26, 26)
                                 .addComponent(jLabel69, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(59, 59, 59))))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)

@@ -101,9 +101,34 @@ public class Cash extends javax.swing.JFrame {
 
     private void PayGCash_PaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PayGCash_PaymentActionPerformed
         // TODO add your handling code here:
-        receipt receiptFrame = new receipt(); // create a Home JFrame object
-        receiptFrame.setVisible(true);  // show Home screen
-        this.dispose();    
+        String mobileNumber = MobileNumber_Payment.getText().trim();
+        
+        //if nothing there
+           if (mobileNumber.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(
+            this,
+            "Please enter a mobile number before paying.",
+            "Missing Information",
+            javax.swing.JOptionPane.WARNING_MESSAGE
+        );
+        return; // stop here
+    }
+
+    // Optional: check if numeric and length (PH numbers example)
+    if (!mobileNumber.matches("\\d{10,11}")) {
+        javax.swing.JOptionPane.showMessageDialog(
+            this,
+            "Please enter a valid mobile number.",
+            "Invalid Number",
+            javax.swing.JOptionPane.ERROR_MESSAGE
+        );
+        return;
+    }
+
+    // If valid → proceed to receipt
+    receipt receiptFrame = new receipt();
+    receiptFrame.setVisible(true);
+    this.dispose();     
     }//GEN-LAST:event_PayGCash_PaymentActionPerformed
 
     /**
