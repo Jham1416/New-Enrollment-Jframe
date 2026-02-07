@@ -741,8 +741,7 @@ private void updateSubjectLists(String course) {
 
     private void AddSub_ApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddSub_ApplicationActionPerformed
         // TODO add your handling code here: String course = Course_Application.getSelectedItem().toString();
-   String selected = Course_Application.getSelectedItem().toString().trim();
-    String course = selected.split(" ")[0]; // "BSIT -1st Year" -> "BSIT"
+   String selectedCourse = Course_Application.getSelectedItem().toString().trim();
 
     String subjectName = SubjecName_Application.getSelectedItem().toString().trim();
 
@@ -750,7 +749,7 @@ private void updateSubjectLists(String course) {
     String subjectCode = "";
     String subjectUnit = "";
 
-    String[][] subjects = courseSubjects.get(course);
+    String[][] subjects = courseSubjects.get(selectedCourse);
     if (subjects != null) {
         for (String[] s : subjects) {
             if (s[0].equals(subjectName)) {
@@ -765,19 +764,26 @@ private void updateSubjectLists(String course) {
     }
 
     // Initialize list for this course if it doesn't exist
-    subjectsMap.putIfAbsent(course, new ArrayList<>());
+    subjectsMap.putIfAbsent(selectedCourse, new ArrayList<>());
+
+    // Check for duplicates
+    String fullSubject = subjectName + "|" + subjectCode + "|" + subjectUnit;
+    if (subjectsMap.get(selectedCourse).contains(fullSubject)) {
+        JOptionPane.showMessageDialog(this, "This subject is already added!");
+        return;
+    }
 
     // Limit to max 5 subjects
-    if (subjectsMap.get(course).size() >= 5) {
+    if (subjectsMap.get(selectedCourse).size() >= 5) {
         JOptionPane.showMessageDialog(this, "Maximum of 5 subjects per course!");
         return;
     }
 
     // Add subject
-    subjectsMap.get(course).add(subjectName + "|" + subjectCode + "|" + subjectUnit);
+    subjectsMap.get(selectedCourse).add(fullSubject);
 
     // Update JLists
-    updateSubjectLists(course);
+    updateSubjectLists(selectedCourse);
     
     }//GEN-LAST:event_AddSub_ApplicationActionPerformed
 
