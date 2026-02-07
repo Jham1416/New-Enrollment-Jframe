@@ -75,7 +75,7 @@ public class appliction extends javax.swing.JFrame {
 
         jLabel9.setText("Academic Year:");
 
-        Course_Application.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Course_Application.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BSIT -1st Year", "BSCS - 2nd Year", "BSECE - 3rd Year", "BSHM - 4th Year" }));
 
         NextButton_Application.setBackground(new java.awt.Color(255, 204, 0));
         NextButton_Application.setText("Next");
