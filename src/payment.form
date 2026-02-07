@@ -242,9 +242,13 @@
                                           <Component id="jLabel5" alignment="1" min="-2" pref="93" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="1" attributes="0">
                                           <Component id="StudentName_Payment" alignment="1" min="-2" pref="503" max="-2" attributes="0"/>
-                                          <Component id="Course_Payment" alignment="1" min="-2" pref="503" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="Course_Payment" min="-2" pref="243" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="Term" min="-2" pref="243" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                   </Group>
                               </Group>
@@ -340,6 +344,7 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="Course_Payment" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="Term" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
@@ -739,10 +744,10 @@
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="4">
-            <StringItem index="0" value="BSIT -1st Year"/>
-            <StringItem index="1" value="BSCS - 2nd Year"/>
-            <StringItem index="2" value="BSECE - 3rd Year"/>
-            <StringItem index="3" value="BSHM - 4th Year"/>
+            <StringItem index="0" value="BSIT "/>
+            <StringItem index="1" value="BSCS "/>
+            <StringItem index="2" value="BSECE "/>
+            <StringItem index="3" value="BSHM "/>
           </StringArray>
         </Property>
       </Properties>
@@ -790,6 +795,24 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PaymentPlan_PaymentActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="Term">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="1st Year"/>
+            <StringItem index="1" value="2nd Year"/>
+            <StringItem index="2" value="3rd Year"/>
+            <StringItem index="3" value="4th Year"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TermActionPerformed"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>

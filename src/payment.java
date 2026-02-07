@@ -77,6 +77,7 @@ public class payment extends javax.swing.JFrame {
         jSeparator5 = new javax.swing.JSeparator();
         jLabel19 = new javax.swing.JLabel();
         PaymentPlan_Payment = new javax.swing.JComboBox<>();
+        Term = new javax.swing.JComboBox<>();
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/resizedpng.png"))); // NOI18N
 
@@ -326,7 +327,7 @@ public class payment extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel18.setText("0.00");
 
-        Course_Payment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BSIT -1st Year", "BSCS - 2nd Year", "BSECE - 3rd Year", "BSHM - 4th Year" }));
+        Course_Payment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BSIT ", "BSCS ", "BSECE ", "BSHM " }));
         Course_Payment.addActionListener(this::Course_PaymentActionPerformed);
 
         PayButton_Payment.setBackground(new java.awt.Color(255, 204, 0));
@@ -340,6 +341,9 @@ public class payment extends javax.swing.JFrame {
 
         PaymentPlan_Payment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Installment", "Full Payment" }));
         PaymentPlan_Payment.addActionListener(this::PaymentPlan_PaymentActionPerformed);
+
+        Term.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st Year", "2nd Year", "3rd Year", "4th Year" }));
+        Term.addActionListener(this::TermActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -375,9 +379,12 @@ public class payment extends javax.swing.JFrame {
                                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(StudentName_Payment, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(Course_Payment, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(StudentName_Payment, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(Course_Payment, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(Term, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                 .addGap(112, 112, 112))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -445,7 +452,8 @@ public class payment extends javax.swing.JFrame {
                                 .addGap(28, 28, 28)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(Course_Payment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5)))
+                                    .addComponent(jLabel5)
+                                    .addComponent(Term, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel4)
                                 .addComponent(StudentName_Payment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -528,22 +536,35 @@ public class payment extends javax.swing.JFrame {
 private void calculatePayment() {
     double tuition = 0;
 
-    // Tuition based on course
-    String course = Course_Payment.getSelectedItem().toString();
+    // Get selected course and year
+    String course = Course_Payment.getSelectedItem().toString().trim();
+    String year = Term.getSelectedItem().toString().trim();
+
+    // Base tuition by course
     switch (course) {
-        case "BSIT -1st Year" -> tuition = 25000;
-        case "BSCS - 2nd Year" -> tuition = 28000;
-        case "BSECE - 3rd Year" -> tuition = 30000;
-        case "BSHM - 4th Year" -> tuition = 22000;
+        case "BSIT" -> tuition += 20000;
+        case "BSCS" -> tuition += 22000;
+        case "BSECE" -> tuition += 25000;
+        case "BSHM" -> tuition += 18000;
     }
 
+    // Add extra tuition by year
+    switch (year) {
+        case "1st Year" -> tuition += 0;      // no extra
+        case "2nd Year" -> tuition += 3000;   // example increment
+        case "3rd Year" -> tuition += 5000;
+        case "4th Year" -> tuition += 7000;
+    }
+
+    // Update the fields
     Tuition_Payment.setText(String.valueOf(tuition));
     Miscellaneous_Payment.setText(String.valueOf(MISC_FEE));
     OtherFee_Payment.setText(String.valueOf(OTHER_FEE));
 
+    // Calculate total
     double total = tuition + MISC_FEE + OTHER_FEE;
 
-    // Discount
+    // Apply discount
     double discount = 0;
     String discountType = Discount_Payment.getSelectedItem().toString();
     if (discountType.contains("10%")) discount = total * 0.10;
@@ -551,14 +572,14 @@ private void calculatePayment() {
 
     total -= discount;
 
-    // Payment plan
+    // Apply payment plan
     String plan = PaymentPlan_Payment.getSelectedItem().toString();
     double balance = total;
-
     if (plan.equals("Installment")) {
-        balance = total / 2; // first payment only
+        balance = total / 2;
     }
 
+    // Show results
     AmountDue_Payment.setText(String.format("%.2f", total));
     Balnace_Payment.setText(String.format("%.2f", balance));
     jLabel18.setText(String.format("%.2f", balance));
@@ -612,6 +633,11 @@ private void calculatePayment() {
         calculatePayment();
     }//GEN-LAST:event_PaymentPlan_PaymentActionPerformed
 
+    private void TermActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TermActionPerformed
+        // TODO add your handling code here:
+        calculatePayment();
+    }//GEN-LAST:event_TermActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -650,6 +676,7 @@ private void calculatePayment() {
     private javax.swing.JButton Return_Home_User_Enrollment;
     private javax.swing.JButton Return_Home_User_Payment;
     private javax.swing.JTextField StudentName_Payment;
+    private javax.swing.JComboBox<String> Term;
     private javax.swing.JTextField Tuition_Payment;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel1;
