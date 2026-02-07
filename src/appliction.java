@@ -414,7 +414,7 @@ public class appliction extends javax.swing.JFrame {
 
         AcademicYear_Application.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st Year", "2nd Year", "3rd Year", "4th Year" }));
 
-        AcademicTerm_Application.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st Term", "2nd Term", "3rd Term" }));
+        AcademicTerm_Application.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st Term", "2nd Term" }));
         AcademicTerm_Application.addActionListener(this::AcademicTerm_ApplicationActionPerformed);
 
         jLabel6.setText("Course:");
