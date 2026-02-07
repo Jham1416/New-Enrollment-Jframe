@@ -83,7 +83,7 @@ public class appliction extends javax.swing.JFrame {
 
         jLabel14.setText("Academic Term:");
 
-        AcademicYear_Application.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        AcademicYear_Application.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st Year", "2nd Year", "3rd Year", "4th Year" }));
 
         AcademicTerm_Application.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st Term", "2nd Term", "3rd Term" }));
         AcademicTerm_Application.addActionListener(this::AcademicTerm_ApplicationActionPerformed);
