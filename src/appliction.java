@@ -671,9 +671,36 @@ public class appliction extends javax.swing.JFrame {
 
     private void NextButton_ApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextButton_ApplicationActionPerformed
         // TODO add your handling code here:
-         Enrollment enrollmentFrame = new Enrollment(); // create a Home JFrame object
-        enrollmentFrame.setVisible(true);  // show Home screen
-        this.dispose();    
+         String course = (String) Course_Application.getSelectedItem();
+    String year = (String) AcademicYear_Application.getSelectedItem();
+    String term = (String) AcademicTerm_Application.getSelectedItem();
+
+    // Get selected subjects for the course
+    String selectedCourse = course.trim().split(" ")[0]; // in case course has extra text
+    List<String> selectedSubjects = subjectsMap.get(selectedCourse);
+
+    // Validation
+    if (course == null || course.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please select a course.");
+        return;
+    }
+    if (year == null || year.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please select an academic year.");
+        return;
+    }
+    if (term == null || term.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please select an academic term.");
+        return;
+    }
+    if (selectedSubjects == null || selectedSubjects.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please add at least one subject.");
+        return;
+    }
+
+    // If all validations pass, proceed to next screen
+    Enrollment enrollmentFrame = new Enrollment();
+    enrollmentFrame.setVisible(true);
+    this.dispose();  
     }//GEN-LAST:event_NextButton_ApplicationActionPerformed
 
     private void SubjecName_ApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubjecName_ApplicationActionPerformed
