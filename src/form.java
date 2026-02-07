@@ -2,7 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 /**
  *
  * @author admin
@@ -16,8 +18,49 @@ public class form extends javax.swing.JFrame {
      */
     public form() {
         initComponents();
+         setLocationRelativeTo(null); // center window
+        setResizable(false); // window size cannot change 
+        setTitle("Student Information Form");
+        addPlaceholders();
     }
-
+private void addPlaceholders() {
+        setPlaceholder(FirstName_Student_StudentInfo, "First Name");
+        setPlaceholder(MiddleName_Student_StudentInfo, "Middle Name");
+        setPlaceholder(LastName_Student_StudentInfo, "Last Name");
+        setPlaceholder(Bday_Student_StudentInfo, "MM/DD/YYYY");
+        setPlaceholder(Contact_Student_StudentInfo, "09XXXXXXXXX");
+        setPlaceholder(Email_Student_StudentInfo, "example@email.com");
+        setPlaceholder(HouseNumber_Address_StudetInfo, "House/Street");
+        setPlaceholder(Barangay_Address_StudetInfo, "Barangay");
+        setPlaceholder(CityMunicipality_Address_StudetInfo, "City/Municipality");
+        setPlaceholder(FirstName_Guardian_StudentInfo, "Full Name");
+        setPlaceholder(Relation_StudentInfo, "Relation");
+        setPlaceholder(Contact_Guardian_StudentInfo, "09XXXXXXXXX");
+        setPlaceholder(Email_Guardian_StudentInfo, "example@email.com");
+    }
+   
+   // Set placeholder behavior for a field
+   private void setPlaceholder(JTextField field, String placeholder) {
+        if (field == null) return; // safety check
+        field.setForeground(Color.GRAY);
+        field.setText(placeholder);
+        
+        // Remove placeholder when user clicks
+        field.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {
+                if (field.getText().equals(placeholder)) {
+                    field.setText("");
+                    field.setForeground(Color.BLACK);
+                }
+            }
+            public void focusLost(FocusEvent e) {
+                if (field.getText().isEmpty()) {
+                    field.setForeground(Color.GRAY);
+                    field.setText(placeholder);
+                }
+            }
+        });
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -516,9 +559,12 @@ public class form extends javax.swing.JFrame {
 
     private void NextButton_StudentInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextButton_StudentInfoActionPerformed
         // TODO add your handling code here:
-         appliction applicationFrame = new appliction(); // create a Home JFrame object
-        applicationFrame.setVisible(true);  // show Home screen
-        this.dispose();    
+     if (validateFields()) {
+            JOptionPane.showMessageDialog(this, "All data validated! Moving to next screen.");
+            appliction appFrame = new appliction(); // your next screen
+            appFrame.setVisible(true);
+            this.dispose();
+        }  
     }//GEN-LAST:event_NextButton_StudentInfoActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -537,7 +583,12 @@ public class form extends javax.swing.JFrame {
     }//GEN-LAST:event_Return_Home_User_StudentInfoActionPerformed
 
     private void User_LogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_User_LogOutActionPerformed
-      
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure to log out?", "Confirm", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            dispose();
+            JOptionPane.showMessageDialog(null, "Logged out successfully");
+            // redirect to login screen if any
+        }
     }//GEN-LAST:event_User_LogOutActionPerformed
 
     private void BackButton_StudentInfo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButton_StudentInfo1ActionPerformed
@@ -546,7 +597,21 @@ public class form extends javax.swing.JFrame {
         homeFrame.setVisible(true);  // show Home screen
         this.dispose();    
     }//GEN-LAST:event_BackButton_StudentInfo1ActionPerformed
-
+ private boolean validateFields() {
+        if (FirstName_Student_StudentInfo.getText().isEmpty() || FirstName_Student_StudentInfo.getForeground() == Color.GRAY) {
+            JOptionPane.showMessageDialog(this, "Please enter student's first name!");
+            return false;
+        }
+        if (LastName_Student_StudentInfo.getText().isEmpty() || LastName_Student_StudentInfo.getForeground() == Color.GRAY) {
+            JOptionPane.showMessageDialog(this, "Please enter student's last name!");
+            return false;
+        }
+        if (Bday_Student_StudentInfo.getText().isEmpty() || Bday_Student_StudentInfo.getForeground() == Color.GRAY) {
+            JOptionPane.showMessageDialog(this, "Please enter student's birth date!");
+            return false;
+        }
+        return true;
+    }
     /**
      * @param args the command line arguments
      */
