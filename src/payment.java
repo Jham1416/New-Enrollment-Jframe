@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
+import javax.swing.JOptionPane;
 /**
  *
  * @author admin
@@ -11,6 +11,8 @@ public class payment extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(payment.class.getName());
 
+    private static final double MISC_FEE = 1500;
+    private static final double OTHER_FEE = 1000;
     /**
      * Creates new form payment
      */
@@ -59,12 +61,10 @@ public class payment extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         AmountDue_Payment = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         jLabel13 = new javax.swing.JLabel();
         Balnace_Payment = new javax.swing.JTextField();
-        AmountPaid_Payment = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         OtherFee_Payment = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
@@ -287,7 +287,13 @@ public class payment extends javax.swing.JFrame {
 
         jLabel5.setText("Course/Year:");
 
+        StudentName_Payment.addActionListener(this::StudentName_PaymentActionPerformed);
+
         jLabel6.setText("Miscellaneous fee:");
+
+        Miscellaneous_Payment.addActionListener(this::Miscellaneous_PaymentActionPerformed);
+
+        Tuition_Payment.addActionListener(this::Tuition_PaymentActionPerformed);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("Tuition Details");
@@ -297,17 +303,22 @@ public class payment extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setText("Payment details");
 
-        jLabel11.setText("Total Amount Due:");
+        AmountDue_Payment.addActionListener(this::AmountDue_PaymentActionPerformed);
 
-        jLabel12.setText("Amount Paid:");
+        jLabel11.setText("Total Amount Due:");
 
         jLabel13.setText("Balance:");
 
+        Balnace_Payment.addActionListener(this::Balnace_PaymentActionPerformed);
+
         jLabel14.setText("Other fees:");
+
+        OtherFee_Payment.addActionListener(this::OtherFee_PaymentActionPerformed);
 
         jLabel15.setText("Student Discount:");
 
-        Discount_Payment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Discount_Payment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Scholar (10%)", "None", "EarlyBird(5%)" }));
+        Discount_Payment.addActionListener(this::Discount_PaymentActionPerformed);
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel17.setText("Total Balance:");
@@ -315,7 +326,8 @@ public class payment extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel18.setText("0.00");
 
-        Course_Payment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Course_Payment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BSIT -1st Year", "BSCS - 2nd Year", "BSECE - 3rd Year", "BSHM - 4th Year" }));
+        Course_Payment.addActionListener(this::Course_PaymentActionPerformed);
 
         PayButton_Payment.setBackground(new java.awt.Color(255, 204, 0));
         PayButton_Payment.setText("Pay");
@@ -327,6 +339,7 @@ public class payment extends javax.swing.JFrame {
         jLabel19.setText("Payment Plan:");
 
         PaymentPlan_Payment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Installment", "Full Payment" }));
+        PaymentPlan_Payment.addActionListener(this::PaymentPlan_PaymentActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -392,13 +405,11 @@ public class payment extends javax.swing.JFrame {
                                         .addComponent(PaymentPlan_Payment, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(AmountPaid_Payment)
                                             .addComponent(AmountDue_Payment)
                                             .addComponent(Balnace_Payment)
                                             .addComponent(Discount_Payment, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE))))))
@@ -410,13 +421,12 @@ public class payment extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PayButton_Payment, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(PayButton_Payment, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(20, 20, 20)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -443,7 +453,7 @@ public class payment extends javax.swing.JFrame {
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                         .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -469,10 +479,6 @@ public class payment extends javax.swing.JFrame {
                             .addComponent(jLabel11))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12)
-                            .addComponent(AmountPaid_Payment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
                             .addComponent(Balnace_Payment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -482,15 +488,16 @@ public class payment extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel19)
-                            .addComponent(PaymentPlan_Payment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(PaymentPlan_Payment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(54, 54, 54))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(141, 141, 141)
-                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(32, 32, 32)
+                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
                     .addComponent(jLabel18))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addComponent(PayButton_Payment)
                 .addGap(109, 109, 109))
         );
@@ -500,9 +507,16 @@ public class payment extends javax.swing.JFrame {
 
     private void PayButton_PaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PayButton_PaymentActionPerformed
         // TODO add your handling code here:
-        Cash cashFrame = new Cash(); // create a Home JFrame object
-        cashFrame.setVisible(true);  // show Home screen
-        this.dispose();    
+    if (StudentName_Payment.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter student name");
+        return;
+    }
+
+    calculatePayment();
+
+    Cash cashFrame = new Cash();
+    cashFrame.setVisible(true);
+    this.dispose();
     }//GEN-LAST:event_PayButton_PaymentActionPerformed
 
     private void Return_Home_User_PaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Return_Home_User_PaymentActionPerformed
@@ -511,6 +525,44 @@ public class payment extends javax.swing.JFrame {
         homeFrame.setVisible(true);  // show Home screen
         this.dispose();    
     }//GEN-LAST:event_Return_Home_User_PaymentActionPerformed
+private void calculatePayment() {
+    double tuition = 0;
+
+    // Tuition based on course
+    String course = Course_Payment.getSelectedItem().toString();
+    switch (course) {
+        case "BSIT -1st Year" -> tuition = 25000;
+        case "BSCS - 2nd Year" -> tuition = 28000;
+        case "BSECE - 3rd Year" -> tuition = 30000;
+        case "BSHM - 4th Year" -> tuition = 22000;
+    }
+
+    Tuition_Payment.setText(String.valueOf(tuition));
+    Miscellaneous_Payment.setText(String.valueOf(MISC_FEE));
+    OtherFee_Payment.setText(String.valueOf(OTHER_FEE));
+
+    double total = tuition + MISC_FEE + OTHER_FEE;
+
+    // Discount
+    double discount = 0;
+    String discountType = Discount_Payment.getSelectedItem().toString();
+    if (discountType.contains("10%")) discount = total * 0.10;
+    if (discountType.contains("5%")) discount = total * 0.05;
+
+    total -= discount;
+
+    // Payment plan
+    String plan = PaymentPlan_Payment.getSelectedItem().toString();
+    double balance = total;
+
+    if (plan.equals("Installment")) {
+        balance = total / 2; // first payment only
+    }
+
+    AmountDue_Payment.setText(String.format("%.2f", total));
+    Balnace_Payment.setText(String.format("%.2f", balance));
+    jLabel18.setText(String.format("%.2f", balance));
+}
 
     private void Return_Home_User_EnrollmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Return_Home_User_EnrollmentActionPerformed
         // TODO add your handling code here:
@@ -518,6 +570,47 @@ public class payment extends javax.swing.JFrame {
         homeFrame.setVisible(true);  // show Home screen
         this.dispose();
     }//GEN-LAST:event_Return_Home_User_EnrollmentActionPerformed
+
+    private void StudentName_PaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StudentName_PaymentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_StudentName_PaymentActionPerformed
+
+    private void Course_PaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Course_PaymentActionPerformed
+        // TODO add your handling code here:
+        calculatePayment();
+
+    }//GEN-LAST:event_Course_PaymentActionPerformed
+
+    private void Tuition_PaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tuition_PaymentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Tuition_PaymentActionPerformed
+
+    private void Miscellaneous_PaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Miscellaneous_PaymentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Miscellaneous_PaymentActionPerformed
+
+    private void OtherFee_PaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OtherFee_PaymentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_OtherFee_PaymentActionPerformed
+
+    private void AmountDue_PaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AmountDue_PaymentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AmountDue_PaymentActionPerformed
+
+    private void Balnace_PaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Balnace_PaymentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Balnace_PaymentActionPerformed
+
+    private void Discount_PaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Discount_PaymentActionPerformed
+        // TODO add your handling code here:
+        calculatePayment();
+
+    }//GEN-LAST:event_Discount_PaymentActionPerformed
+
+    private void PaymentPlan_PaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PaymentPlan_PaymentActionPerformed
+        // TODO add your handling code here:
+        calculatePayment();
+    }//GEN-LAST:event_PaymentPlan_PaymentActionPerformed
 
     /**
      * @param args the command line arguments
@@ -546,7 +639,6 @@ public class payment extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField AmountDue_Payment;
-    private javax.swing.JTextField AmountPaid_Payment;
     private javax.swing.JTextField Balnace_Payment;
     private javax.swing.JComboBox<String> Course_Payment;
     private javax.swing.JComboBox<String> Discount_Payment;
@@ -563,7 +655,6 @@ public class payment extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
